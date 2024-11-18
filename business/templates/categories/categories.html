@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block title %} Категории {% endblock %}
+{% block content %}
+Здесь будут категории
+<a href="{% url 'categories:create_category' %}">Создать категорию</a>
+{% endblock %}
