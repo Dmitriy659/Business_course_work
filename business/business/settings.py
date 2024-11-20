@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar"
+    "debug_toolbar",
+    "django_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -117,6 +118,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.MyUser'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
+
+LOGIN_REDIRECT_URL = 'homepage:index'
+LOGIN_URL = 'login'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
