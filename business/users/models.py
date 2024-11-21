@@ -46,6 +46,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     role_in_company = models.CharField(max_length=30, blank=True, null=True,
                                        help_text="Необязательное поле")
     registration_date = models.DateField(auto_now_add=True)
+    total_revenue = models.PositiveIntegerField(verbose_name='Выручка', default=0)
+    total_expenses = models.IntegerField(verbose_name='Затраты', default=0)
 
     objects = MyUserManager()
     USERNAME_FIELD = 'username'

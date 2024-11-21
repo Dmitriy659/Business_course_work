@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Категории {% endblock %}
+{% block content %}
+  Здесь вы можете увидеть все свои категории!
+  <a href="{% url 'categories:create_category' %}">Создать категорию</a>
+  <hr>
+  {% if categories %}
+  <ul>
+    {% for category in categories %}
+      <li>
+        <p>{{ category.title }} - {{ category.description }}</p>
+        <a href="{% url 'categories:update_category' category.id %}">Обновить категорию</a>
+        <a href="{% url 'categories:delete_category' category.id %}">Удалить категорию</a>
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>К сожалению, у вас пока нет категорий, но вы можете их создать</p>
+  {% endif %}
+{% endblock %}
