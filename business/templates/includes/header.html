@@ -35,7 +35,7 @@
                 Категории
               </a>
             </li>
-            <span>Пользователь: <b>{{ user.email }}</b></span>
+            <span>Привет,  <b>{{ user.first_name }}</b></span>
             <li class="nav-item">
               <form method="post" action="{% url 'logout' %}">
                   {% csrf_token %}

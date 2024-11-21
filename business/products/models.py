@@ -20,8 +20,8 @@ class Product(models.Model):
                                         verbose_name='Цена продажи',
                                         blank=False, null=False)
     amount = models.DecimalField(max_digits=10, decimal_places=2,
-                                 verbose_name='Остаток', validators=[MinValueValidator(0)],
-                                 blank=False, null=False)
+                                 verbose_name='Кол-во', validators=[MinValueValidator(0)],
+                                 blank=False, null=False, help_text="Кол-во товара в наличии")
     measure_unit = models.CharField(max_length=15, verbose_name='Единицы измерения', blank=False,
                                     null=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')

@@ -26,10 +26,10 @@ class MyUserManager(BaseUserManager):
 
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=30, unique=True)
+    username = models.CharField(max_length=30, unique=True, verbose_name="Логин")
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=20, verbose_name="Имя")
-    last_name = models.CharField(max_length=20, blank=True, help_text="Необязательное поле")
+    first_name = models.CharField(max_length=20, verbose_name="Имя", blank=False, null=False)
+    last_name = models.CharField(max_length=20, blank=True, verbose_name="Фамилия", help_text="Необязательное поле")
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     company_name = models.CharField(max_length=30, blank=True, null=True,
