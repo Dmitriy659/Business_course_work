@@ -35,16 +35,16 @@
           </li>
 
           {% if user.is_authenticated %}
-            <span>Пользователь: <b>{{ user.username }}</b></span>
+            <span>Пользователь: <b>{{ user.email }}</b></span>
             <li class="nav-item">
-              <form method="post" action="{% url 'user:logout' %}">
+              <form method="post" action="{% url 'logout' %}">
                   {% csrf_token %}
                   <button type="submit">Logout</button>
               </form>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link {% if view_name == 'login' %}active{% endif %}" href="{% url 'user:login' %}">Войти</a>
+              <a class="nav-link {% if view_name == 'login' %}active{% endif %}" href="{% url 'login' %}">Войти</a>
             </li>
           {% endif %}
         </ul>
