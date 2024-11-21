@@ -3,13 +3,13 @@ from django.urls import path, include
 from django.conf import settings
 
 urlpatterns = [
+    path('', include('homepage.urls')),
     path('auth/', include('django.contrib.auth.urls')),
     path('user/', include('users.urls')),
-    path("admin/", admin.site.urls),
-    path('', include('homepage.urls')),
     path('categories/', include('categories.urls')),
+    path('products/', include('products.urls')),
     # path('orders/', include('orders.urls')),
-    # path('products/', include('products.urls'))
+    path("admin/", admin.site.urls),
 ]
 
 if settings.DEBUG:

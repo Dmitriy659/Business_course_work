@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление{% endblock %}
+
+{% block content %}
+  <p>Вы уверены, что хотите удалить товар "{{ product.title }}"
+    с описанием "{{ product.description|truncatewords:10 }}"?</p>
+  {% if product.amount > 0 %}
+    <p>У вас осталось ещё {{ product.amount|floatformat:"g" }} {{ product.measure_unit }}</p>
+  {% else %}
+    <p>Такого товара у вас больше не осталось</p>
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Удалить">
+  </form>
+{% endblock %}

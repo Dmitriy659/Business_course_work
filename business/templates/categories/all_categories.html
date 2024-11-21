@@ -12,6 +12,7 @@
         <p>{{ category.title }} - {{ category.description }}</p>
         <a href="{% url 'categories:update_category' category.id %}">Обновить категорию</a>
         <a href="{% url 'categories:delete_category' category.id %}">Удалить категорию</a>
+        <a href="{% url 'products:all_products' category.id %}">Товары из категории</a>
       </li>
     {% endfor %}
   </ul>

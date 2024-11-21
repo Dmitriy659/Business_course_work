@@ -3,7 +3,7 @@
 {% block title %}Удаление{% endblock %}
 
 {% block content %}
-  <p>Вы уверены, что хотите удалить категорию {{ category.title }}
+  <p>Вы уверены, что хотите удалить категорию "{{ category.title }}"
     с описанием "{{ category.description|truncatewords:10 }}"?</p>
   <p>Категорию невозможно вернуть, а вместе с ней будут удалены все её товары. </p>
   <form method="post">

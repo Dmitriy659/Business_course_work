@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Товары категории {% endblock %}
+
+{% block content %}
+  <h1>Товары в категории "{{ category.title }}"</h1>
+  <a href="{% url 'products:create_product' category.id %}">Создать товар</a>
+  {% if products %}
+    <ul>
+      {% for product in products %}
+        <li><p>{{ product.title }} - {{ product.description }}. Осталось {{ product.amount|floatformat:"g" }} {{ product.measure_unit }}</p>
+          <a href="{% url 'products:update_product' category.id product.id %}">Изменить товар</a>
+          <a href="{% url 'products:delete_product' category.id product.id %}">Удалить товар</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>В этой категории нет товаров.</p>
+  {% endif %}
+{% endblock %}

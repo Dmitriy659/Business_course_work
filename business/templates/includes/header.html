@@ -25,16 +25,16 @@
               Главная
             </a>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link {% if view_name == 'categories:all_categories' %} active {% endif %}"
-              href="{% url 'categories:all_categories' %}"
-              >
-              Категории
-            </a>
-          </li>
 
           {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a
+                class="nav-link {% if view_name == 'categories:all_categories' %} active {% endif %}"
+                href="{% url 'categories:all_categories' %}"
+                >
+                Категории
+              </a>
+            </li>
             <span>Пользователь: <b>{{ user.email }}</b></span>
             <li class="nav-item">
               <form method="post" action="{% url 'logout' %}">
