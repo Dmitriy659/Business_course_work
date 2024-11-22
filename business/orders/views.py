@@ -1,7 +1,7 @@
 from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Prefetch
+from django.db.models import Prefetch, Sum, F
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -30,8 +30,22 @@ class OrderListView(ListView):
 
     def get_queryset(self):
         order_items = OrderItem.objects.select_related('product')
-        return (Order.objects.prefetch_related(Prefetch('order', queryset=order_items))
-                .filter(user=self.request.user).order_by('-created'))
+        orders = (Order.objects.prefetch_related(Prefetch('order', queryset=order_items))
+                  .filter(user=self.request.user).order_by('-created'))
+
+        for order in orders:
+            order.total_price = sum(
+                item.price * item.quantity for item in order.order.all()
+            )
+        return orders
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        revenue = \
+        (OrderItem.objects.filter(order__user=self.request.user).annotate(total_price=F('price') * F('quantity'))
+         .aggregate(total_revenue=Sum('total_price')))['total_revenue'] or 0
+        context['revenue'] = revenue
+        return context
 
 
 class OrderDeleteView(LoginRequiredMixin, View):

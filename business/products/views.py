@@ -1,3 +1,4 @@
+from django.db.models import Sum, F
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
@@ -79,3 +80,27 @@ class DeleteProductView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('products:all_products', kwargs={'category_id': self.kwargs.get('category_id')})
+
+
+class HeapProductListView(ListView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'products/heap_products.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        sort_type = self.request.GET.get('sort', 'title')
+        if sort_type not in ['title', '-title', 'selling_price', '-selling_price',
+                             'total_sales', '-total_sales', 'total_revenue', '-total_revenue']:
+            sort_type = 'title'
+
+        products = Product.objects.filter(user=self.request.user)
+
+        products = products.annotate(
+            total_sales=Sum('product__quantity'),
+            total_revenue=Sum(F('product__quantity') * F('product__price'))
+        )
+
+        return products.order_by(sort_type)
+
+

@@ -11,10 +11,6 @@ class Product(models.Model):
     title = models.CharField(max_length=20, verbose_name='Название товара',
                              blank=False, null=False)
     description = models.TextField(verbose_name='Описание товара')
-    cost_price = models.DecimalField(max_digits=10, decimal_places=2,
-                                     validators=[MinValueValidator(0.01)],
-                                     verbose_name='Себестоимость',
-                                     blank=False, null=False)
     selling_price = models.DecimalField(max_digits=10, decimal_places=2,
                                         validators=[MinValueValidator(0.01)],
                                         verbose_name='Цена продажи',

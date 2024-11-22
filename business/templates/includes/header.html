@@ -35,6 +35,14 @@
                 Категории
               </a>
             </li>
+          <li class="nav-item">
+              <a
+                class="nav-link {% if view_name == 'products:heap_products' %} active {% endif %}"
+                href="{% url 'products:heap_products' 'title' %}"
+                >
+                Все товары
+              </a>
+            </li>
             <li class="nav-item">
               <a
                 class="nav-link {% if view_name == 'orders:all_orders' %} active {% endif %}"
@@ -44,6 +52,14 @@
               </a>
             </li>
             <span>Привет,  <b>{{ user.first_name }}</b></span>
+            <li class="nav-item">
+              <a
+                class="nav-link {% if view_name == 'user:profile' %} active {% endif %}"
+                href="{% url 'user:profile' user.id %}"
+                >
+                Профиль
+              </a>
+            </li>
             <li class="nav-item">
               <form method="post" action="{% url 'logout' %}">
                   {% csrf_token %}

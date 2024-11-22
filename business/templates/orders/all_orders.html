@@ -4,6 +4,7 @@
 
 {% block content %}
 <h1>Список заказов</h1>
+<h3>Ваша общая выручка: {{ revenue }}</h3>
 <a href="{% url 'orders:create_order' %}">Создать заказ</a>
 {% if orders %}
     <table>
@@ -13,6 +14,8 @@
                 <th>Покупатель</th>
                 <th>Дата создания</th>
                 <th>Детали заказа</th>
+                <th>Выручка</th>
+                <th>Удалить</th>
             </tr>
         </thead>
         <tbody>
@@ -25,12 +28,13 @@
                 <ul>
                     {% for item in order.order.all %}
                     <li>
-                        {{ item.product.title }} - {{ item.quantity|floatformat:"g" }} x {{ item.price }} руб.
-                        <a href="{% url 'orders:delete_order' order.id %}">Удалить заказ</a>
+                        {{ item.product.title }} - {{ item.quantity|floatformat:"g" }} x {{ item.price|floatformat:"g" }} руб.
                     </li>
                     {% endfor %}
                 </ul>
             </td>
+            <td> {{ order.total_price|floatformat:"g" }} руб </td>
+            <td><a href="{% url 'orders:delete_order' order.id %}">Удалить заказ</a></td>
         </tr>
         {% endfor %}
     </tbody>

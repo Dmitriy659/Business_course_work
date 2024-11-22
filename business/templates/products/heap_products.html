@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Все продукты{% endblock %}
+{% block content %}
+  <form method="get" action="{% url 'products:heap_products' 'sort' %}">
+    <label for="sort">Сортировать по:</label>
+    <select name="sort" id="sort">
+        <option value="title" {% if request.GET.sort == 'title' %}selected{% endif %}>Название А-Я</option>
+        <option value="-title" {% if request.GET.sort == '-title' %}selected{% endif %}>Название Я-А</option>
+
+        <option value="selling_price" {% if request.GET.sort == 'selling_price' %}selected{% endif %}>Цена (сначала дешевле)</option>
+        <option value="-selling_price" {% if request.GET.sort == '-selling_price' %}selected{% endif %}>Цена (сначала дороже)</option>
+
+        <option value="total_sales" {% if request.GET.sort == 'total_sales' %}selected{% endif %}>Количество продаж (сначала меньше)</option>
+        <option value="-total_sales" {% if request.GET.sort == '-total_sales' %}selected{% endif %}>Количество продаж (сначала больше)</option>
+
+        <option value="total_revenue" {% if request.GET.sort == 'total_revenue' %}selected{% endif %}>Сумма продаж (сначала меньше)</option>
+        <option value="-total_revenue" {% if request.GET.sort == '-total_revenue' %}selected{% endif %}>Сумма продаж (сначала больше)</option>
+    </select>
+    <input type="submit" value="Отсортировать">
+</form>
+
+
+  {% for product in products %}
+    <p>{{ product.title }}: {{ product.description }}, цена: {{ product.selling_price }} руб. Кол-во продаж: {{ product.total_sales }}, выручка: {{ product.total_revenue}} руб</p>
+  {% endfor %}
+{% endblock %}

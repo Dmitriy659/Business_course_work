@@ -37,7 +37,10 @@ class DeleteCategoryView(DeleteView):
     success_url = reverse_lazy(REDIRECT_TO)
 
     def get_queryset(self):
-        return Category.objects.filter(user=self.request.user)
+        categories = Category.objects.filter(user=self.request.user)
+
+
+        return categories
 
 
 class CreateCategoryView(CreateView):
