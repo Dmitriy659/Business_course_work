@@ -27,6 +27,7 @@ class OrderListView(ListView):
     model = Order
     template_name = 'orders/all_orders.html'  # Шаблон для отображения
     context_object_name = 'orders'  # Имя переменной в шаблоне
+    paginate_by = 10
 
     def get_queryset(self):
         order_items = OrderItem.objects.select_related('product')

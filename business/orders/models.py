@@ -22,9 +22,3 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)], default=0.01,
                                 verbose_name='Цена')
     quantity = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
-
-    def get_total_cost(self):
-        return self.product.selling_price * self.quantity
-
-    def get_total_profit(self):
-        return (self.product.cost_price - self.product.selling_price) * self.quantity

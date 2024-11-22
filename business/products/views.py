@@ -87,6 +87,7 @@ class HeapProductListView(ListView):
     form_class = ProductForm
     template_name = 'products/heap_products.html'
     context_object_name = 'products'
+    paginate_by = 20
 
     def get_queryset(self):
         sort_type = self.request.GET.get('sort', 'title')
@@ -99,8 +100,8 @@ class HeapProductListView(ListView):
         products = products.annotate(
             total_sales=Sum('product__quantity'),
             total_revenue=Sum(F('product__quantity') * F('product__price'))
-        )
+        ).order_by(sort_type)
 
-        return products.order_by(sort_type)
+        return products
 
 

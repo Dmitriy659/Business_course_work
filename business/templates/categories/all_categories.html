@@ -5,17 +5,18 @@
   Здесь вы можете увидеть все свои категории!
   <a href="{% url 'categories:create_category' %}">Создать категорию</a>
   <hr>
-  {% if categories %}
+  {% if page_obj  %}
   <ul>
-    {% for category in categories %}
+    {% for category in page_obj  %}
       <li>
-        <p>{{ category.title }} - {{ category.description }}</p>
+        <p>{{ category.title }} - {{ category.description }}. Кол-во продаж: {{ category.total_sales|default:0 }}, выручка {{ category.total_revenue|default:0 }}</p>
         <a href="{% url 'categories:update_category' category.id %}">Обновить категорию</a>
         <a href="{% url 'categories:delete_category' category.id %}">Удалить категорию</a>
         <a href="{% url 'products:all_products' category.id %}">Товары из категории</a>
       </li>
     {% endfor %}
   </ul>
+  {%  include 'includes/paginator.html' %}
   {% else %}
     <p>К сожалению, у вас пока нет категорий, но вы можете их создать</p>
   {% endif %}

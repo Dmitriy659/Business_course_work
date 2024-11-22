@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.db.models import Sum, F
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView, DetailView, DeleteView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from .forms import CategoryForm
 from .models import Category
@@ -14,11 +14,14 @@ class CategoryListView(ListView):
     """
     model = Category
     template_name = 'categories/all_categories.html'
+    paginate_by = 6
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['categories'] = Category.objects.filter(user=self.request.user)
-        return context
+    def get_queryset(self):
+        queryset = Category.objects.filter(user=self.request.user).annotate(
+            total_sales=Sum('products__product__quantity'),
+            total_revenue=Sum(F('products__product__quantity') * F('products__product__price'))
+        ).order_by('title')
+        return queryset
 
 
 class UpdateCategoryView(UpdateView):
@@ -38,7 +41,6 @@ class DeleteCategoryView(DeleteView):
 
     def get_queryset(self):
         categories = Category.objects.filter(user=self.request.user)
-
 
         return categories
 

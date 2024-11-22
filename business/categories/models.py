@@ -18,7 +18,7 @@ class Category(models.Model):
         unique_together = ('user', 'title')
         verbose_name = "Категория"
         verbose_name_plural = "Категории"
-        ordering = ('title', )
+        ordering = ('-title', )
 
     def __str__(self):
         return self.title
