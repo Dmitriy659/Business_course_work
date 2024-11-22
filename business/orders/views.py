@@ -93,15 +93,16 @@ class CreateOrderView(LoginRequiredMixin, View):
                 quantity = float(product.get('quantity'))
 
                 product_obj = Product.objects.get(id=product_id, user=request.user)
-                product_obj.amount -= Decimal(quantity)
                 if product_id in products_to_save:
-                    products_to_save[product_id] += quantity
+                    products_to_save[product_id]['quantity'] += quantity
                 else:
                     products_to_save[product_id] = {'product': product_obj, 'quantity': quantity, 'price': price}
             order.save()
             for product in products_to_save:
                 data = products_to_save[product]
-                data['product'].save()
+                product_obj = data['product']
+                product_obj.amount -= Decimal(data['quantity'])
+                product_obj.save()
                 OrderItem.objects.create(order=order, product=data['product'], quantity=data['quantity'],
                                          price=data['price'])
             return redirect('homepage:index')
