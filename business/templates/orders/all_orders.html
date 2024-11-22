@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Список заказов{% endblock %}
+
+{% block content %}
+<h1>Список заказов</h1>
+<a href="{% url 'orders:create_order' %}">Создать заказ</a>
+{% if orders %}
+    <table>
+        <thead>
+            <tr>
+                <th>Номер заказа</th>
+                <th>Покупатель</th>
+                <th>Дата создания</th>
+                <th>Детали заказа</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.buyer }}</td>
+            <td>{{ order.created|date:"d.m.Y H:i" }}</td>
+            <td>
+                <ul>
+                    {% for item in order.order.all %}
+                    <li>
+                        {{ item.product.title }} - {{ item.quantity|floatformat:"g" }} x {{ item.price }} руб.
+                        <a href="{% url 'orders:delete_order' order.id %}">Удалить заказ</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% else %}
+    <p>У вас пока нет заказов.</p>
+{% endif %}
+{% endblock %}
