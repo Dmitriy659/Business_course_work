@@ -29,7 +29,7 @@
                 <ul>
                     {% for item in order.order.all %}
                     <li class="order_list">
-                        {{ item.product.title }} - {{ item.quantity|floatformat:"g" }} x {{ item.price|floatformat:"g" }} руб.
+                        {{ item.product_name }} - {{ item.quantity|floatformat:"g" }} x {{ item.price|floatformat:"g" }} руб.
                     </li>
                     {% endfor %}
                 </ul>

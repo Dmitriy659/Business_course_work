@@ -1,7 +1,6 @@
 .venv/
 .idea/
 config.py
-.business/sent_emails/
-.business/sent_emails/*
+**/sent_emails/
 *.pyc
 **/__pycache__/

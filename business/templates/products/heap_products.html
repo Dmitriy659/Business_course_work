@@ -29,7 +29,7 @@
   {% for product in products %}
     <div class="product">
       <p>{{ product.title }}: {{ product.description|truncatewords:5 }} | Категория: <span><a href="{% url 'products:all_products' product.category.id %}">{{ product.category.title }}</a></span> </p>
-      <p>Цена: {{ product.selling_price }} руб. Кол-во продаж:
+      <p>Осталось: {{ product.amount }} {{ product.measure_unit }}, цена: {{ product.selling_price }} руб. Кол-во продаж:
           {{ product.total_sales|default:0 }}, выручка: {{ product.total_revenue|default:0 }} руб</p>
     </div>
   {% endfor %}

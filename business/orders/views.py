@@ -63,9 +63,14 @@ class OrderDeleteView(LoginRequiredMixin, View):
         return_products = request.POST.get('return_products') == 'on'
         if return_products:
             for item in order.order.all():
-                product = item.product
-                product.amount += item.quantity
-                product.save()
+                try:
+                    product = item.product
+                    if product is None:
+                        continue
+                    product.amount += item.quantity
+                    product.save()
+                except Product.DoesNotExist:
+                    pass
         order.delete()
         return redirect('orders:all_orders')
 
@@ -96,7 +101,8 @@ class CreateOrderView(LoginRequiredMixin, View):
                 if product_id in products_to_save:
                     products_to_save[product_id]['quantity'] += quantity
                 else:
-                    products_to_save[product_id] = {'product': product_obj, 'quantity': quantity, 'price': price}
+                    products_to_save[product_id] = {'product': product_obj, 'quantity': quantity, 'price': price,
+                                                    'product_name': product_obj.title}
             order.save()
             for product in products_to_save:
                 data = products_to_save[product]
@@ -104,6 +110,6 @@ class CreateOrderView(LoginRequiredMixin, View):
                 product_obj.amount -= Decimal(data['quantity'])
                 product_obj.save()
                 OrderItem.objects.create(order=order, product=data['product'], quantity=data['quantity'],
-                                         price=data['price'])
+                                         price=data['price'], product_name=data['product_name'])
             return redirect('homepage:index')
         return JsonResponse({'error': ' '.join(list(errors_log))}, status=400)
