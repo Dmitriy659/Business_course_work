@@ -20,7 +20,7 @@ class ProductListView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category_id = self.kwargs.get('category_id')
-        context['category'] = Category.objects.get(pk=category_id)
+        context['category'] = Category.objects.get(pk=category_id, user=self.request.user)
         context['products'] = Product.objects.filter(user=self.request.user,
                                                      category=category_id)
         return context
