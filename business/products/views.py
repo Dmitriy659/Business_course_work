@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum, F
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -11,7 +12,7 @@ from categories.models import Category
 REDIRECT_TO = 'products:all_products'
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     form_class = ProductForm
     template_name = 'products/all_products.html'
@@ -25,7 +26,7 @@ class ProductListView(ListView):
         return context
 
 
-class CreateProductView(CreateView):
+class CreateProductView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'products/create_product.html'
@@ -50,7 +51,7 @@ class CreateProductView(CreateView):
         return reverse_lazy(REDIRECT_TO, kwargs={'category_id': self.kwargs.get('category_id')})
 
 
-class UpdateProductView(UpdateView):
+class UpdateProductView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'products/update_product.html'
@@ -73,7 +74,7 @@ class UpdateProductView(UpdateView):
         return reverse_lazy(REDIRECT_TO, kwargs={'category_id': self.kwargs.get('category_id')})
 
 
-class DeleteProductView(DeleteView):
+class DeleteProductView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'products/delete_product.html'
 
@@ -95,7 +96,7 @@ class DeleteProductView(DeleteView):
         return reverse_lazy(REDIRECT_TO, kwargs={'category_id': self.kwargs.get('category_id')})
 
 
-class HeapProductListView(ListView):
+class HeapProductListView(LoginRequiredMixin, ListView):
     model = Product
     form_class = ProductForm
     template_name = 'products/heap_products.html'

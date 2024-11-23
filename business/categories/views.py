@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Sum, F
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
@@ -8,7 +9,7 @@ from .models import Category
 REDIRECT_TO = 'categories:all_categories'
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     """
     Страница со всеми категориями
     """
@@ -24,7 +25,7 @@ class CategoryListView(ListView):
         return queryset
 
 
-class UpdateCategoryView(UpdateView):
+class UpdateCategoryView(LoginRequiredMixin, UpdateView):
     model = Category
     form_class = CategoryForm
     template_name = 'categories/update_category.html'
@@ -34,7 +35,7 @@ class UpdateCategoryView(UpdateView):
         return Category.objects.filter(user=self.request.user)
 
 
-class DeleteCategoryView(DeleteView):
+class DeleteCategoryView(LoginRequiredMixin, DeleteView):
     model = Category
     template_name = 'categories/delete_category.html'
     success_url = reverse_lazy(REDIRECT_TO)
@@ -45,7 +46,7 @@ class DeleteCategoryView(DeleteView):
         return categories
 
 
-class CreateCategoryView(CreateView):
+class CreateCategoryView(LoginRequiredMixin, CreateView):
     """
     Страница создания категории
     """

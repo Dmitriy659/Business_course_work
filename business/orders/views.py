@@ -23,7 +23,7 @@ def user_products(request):
     return JsonResponse(list(user_product), safe=False)
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
     model = Order
     template_name = 'orders/all_orders.html'  # Шаблон для отображения
     context_object_name = 'orders'  # Имя переменной в шаблоне
