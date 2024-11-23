@@ -14,7 +14,7 @@ class CategoryListView(ListView):
     """
     model = Category
     template_name = 'categories/all_categories.html'
-    paginate_by = 6
+    paginate_by = 4
 
     def get_queryset(self):
         queryset = Category.objects.filter(user=self.request.user).annotate(

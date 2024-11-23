@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DeleteView
+from django.views.generic import ListView
 
 from .forms import OrderForm
 from .models import OrderItem, Order
@@ -43,8 +43,8 @@ class OrderListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         revenue = \
-        (OrderItem.objects.filter(order__user=self.request.user).annotate(total_price=F('price') * F('quantity'))
-         .aggregate(total_revenue=Sum('total_price')))['total_revenue'] or 0
+            (OrderItem.objects.filter(order__user=self.request.user).annotate(total_price=F('price') * F('quantity'))
+             .aggregate(total_revenue=Sum('total_price')))['total_revenue'] or 0
         context['revenue'] = revenue
         return context
 

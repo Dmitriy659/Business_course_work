@@ -1,0 +1,38 @@
+.plain_text {
+    text-indent: 3%;
+}
+
+#navbarNav {
+    justify-content: space-around;
+}
+
+.text_login {
+    display: flex;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* Расстояние между карточками */
+    margin: 20px;
+    padding: 10px;
+}
+
+.category, .product {
+    background-color: #f9f9f9; /* Светлый фон карточки */
+    border: 1px solid #ddd; /* Легкая граница */
+    border-radius: 8px; /* Скругленные углы */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Тень для объема */
+    padding: 15px;
+    text-align: left; /* Текст выравниваем слева */
+    transition: transform 0.2s, box-shadow 0.2s; /* Анимация при наведении */
+}
+
+.product {
+    margin: 3px;
+}
+
+.category:hover, .product:hover {
+    transform: translateY(-5px); /* Легкий подъем карточки */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Более сильная тень */
+}

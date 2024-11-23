@@ -8,6 +8,9 @@ from .forms import ProductForm
 from categories.models import Category
 
 
+REDIRECT_TO = 'products:all_products'
+
+
 class ProductListView(ListView):
     model = Product
     form_class = ProductForm
@@ -44,7 +47,7 @@ class CreateProductView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('products:all_products', kwargs={'category_id': self.kwargs.get('category_id')})
+        return reverse_lazy(REDIRECT_TO, kwargs={'category_id': self.kwargs.get('category_id')})
 
 
 class UpdateProductView(UpdateView):
@@ -61,8 +64,13 @@ class UpdateProductView(UpdateView):
             category_id=category_id
         )
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_id'] = self.kwargs.get('category_id')
+        return context
+
     def get_success_url(self):
-        return reverse_lazy('products:all_products', kwargs={'category_id': self.kwargs.get('category_id')})
+        return reverse_lazy(REDIRECT_TO, kwargs={'category_id': self.kwargs.get('category_id')})
 
 
 class DeleteProductView(DeleteView):
@@ -78,8 +86,13 @@ class DeleteProductView(DeleteView):
             category_id=category_id
         )
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_id'] = self.kwargs.get('category_id')
+        return context
+
     def get_success_url(self):
-        return reverse_lazy('products:all_products', kwargs={'category_id': self.kwargs.get('category_id')})
+        return reverse_lazy(REDIRECT_TO, kwargs={'category_id': self.kwargs.get('category_id')})
 
 
 class HeapProductListView(ListView):
@@ -100,7 +113,7 @@ class HeapProductListView(ListView):
         products = products.annotate(
             total_sales=Sum('product__quantity'),
             total_revenue=Sum(F('product__quantity') * F('product__price'))
-        ).order_by(sort_type)
+        ).select_related('category').order_by(sort_type)
 
         return products
 

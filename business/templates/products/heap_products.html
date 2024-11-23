@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Все продукты{% endblock %}
+{% block title %}Все товары{% endblock %}
 {% block content %}
+  <p>
+    На этой странице вы можете увидеть статистику по всем своим товарам и сравнить их. Редактировать товары
+    можно через категории
+  </p>
   <form method="get" action="{% url 'products:heap_products' 'sort' %}">
     <label for="sort">Сортировать по:</label>
     <select name="sort" id="sort">
@@ -18,12 +22,16 @@
         <option value="-total_revenue" {% if request.GET.sort == '-total_revenue' %}selected{% endif %}>Сумма продаж (сначала больше)</option>
     </select>
     <input type="submit" value="Отсортировать">
-</form>
+  </form>
+<hr>
 
 
   {% for product in products %}
-    <p>{{ product.title }}: {{ product.description }}, цена: {{ product.selling_price }} руб. Кол-во продаж:
-      {{ product.total_sales|default:0 }}, выручка: {{ product.total_revenue|default:0 }} руб</p>
+    <div class="product">
+      <p>{{ product.title }}: {{ product.description|truncatewords:5 }} | Категория: <span><a href="{% url 'products:all_products' product.category.id %}">{{ product.category.title }}</a></span> </p>
+      <p>Цена: {{ product.selling_price }} руб. Кол-во продаж:
+          {{ product.total_sales|default:0 }}, выручка: {{ product.total_revenue|default:0 }} руб</p>
+    </div>
   {% endfor %}
 
 

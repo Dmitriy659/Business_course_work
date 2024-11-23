@@ -2,20 +2,23 @@
 
 {% block title %} Категории {% endblock %}
 {% block content %}
-  Здесь вы можете увидеть все свои категории!
+  <p class="plain_text">Это страница с вашими категориями товаров. Здесь вы можете объединять товары в одну категории
+  и следить за статистикой продаж. Перед тем как создать товар, создайте категорию.</p>
   <a href="{% url 'categories:create_category' %}">Создать категорию</a>
   <hr>
   {% if page_obj  %}
-  <ul>
+  <div class="categories">
     {% for category in page_obj  %}
-      <li>
-        <p>{{ category.title }} - {{ category.description }}. Кол-во продаж: {{ category.total_sales|default:0 }}, выручка {{ category.total_revenue|default:0 }}</p>
-        <a href="{% url 'categories:update_category' category.id %}">Обновить категорию</a>
-        <a href="{% url 'categories:delete_category' category.id %}">Удалить категорию</a>
+      <div class="category">
+        <b>{{ category.title }}</b> <span>- {{ category.description }}</span>
+        <p>Кол-во продаж: {{ category.total_sales|default:0 }}</p>
+        <p>Выручка {{ category.total_revenue|default:0 }}</p>
+        <a href="{% url 'categories:update_category' category.id %}">Обновить категорию</a> |
+        <a href="{% url 'categories:delete_category' category.id %}">Удалить категорию</a> |
         <a href="{% url 'products:all_products' category.id %}">Товары из категории</a>
-      </li>
+      </div>
     {% endfor %}
-  </ul>
+  </div>
   {%  include 'includes/paginator.html' %}
   {% else %}
     <p>К сожалению, у вас пока нет категорий, но вы можете их создать</p>

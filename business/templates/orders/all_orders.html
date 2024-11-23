@@ -3,11 +3,12 @@
 {% block title %}Список заказов{% endblock %}
 
 {% block content %}
-<h1>Список заказов</h1>
 <h3>Ваша общая выручка: {{ revenue }}</h3>
+<p>Здесь вы можете управлять своими продажами. </p>
 <a href="{% url 'orders:create_order' %}">Создать заказ</a>
+<hr>
 {% if orders %}
-    <table>
+    <table class="orders-table">
         <thead>
             <tr>
                 <th>Номер заказа</th>
@@ -27,7 +28,7 @@
             <td>
                 <ul>
                     {% for item in order.order.all %}
-                    <li>
+                    <li class="order_list">
                         {{ item.product.title }} - {{ item.quantity|floatformat:"g" }} x {{ item.price|floatformat:"g" }} руб.
                     </li>
                     {% endfor %}

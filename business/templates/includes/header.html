@@ -51,27 +51,23 @@
                 Заказы
               </a>
             </li>
-            <span>Привет,  <b>{{ user.first_name }}</b></span>
-            <li class="nav-item">
+          </ul>
+          <div class="text_login">
+            <span style="margin: auto 0;">Привет,  <b>{{ user.first_name }}</b></span>
               <a
-                class="nav-link {% if view_name == 'user:profile' %} active {% endif %}"
+                class="nav-link"
                 href="{% url 'user:profile' user.id %}"
                 >
                 Профиль
               </a>
-            </li>
-            <li class="nav-item">
-              <form method="post" action="{% url 'logout' %}">
+              <form method="post" action="{% url 'logout' %}" style="margin: auto 0;">
                   {% csrf_token %}
-                  <button type="submit">Logout</button>
+                  <button style=" color: #0d6efd; background-color: transparent; border:none;" type="submit">Logout</button>
               </form>
-            </li>
           {% else %}
-            <li class="nav-item">
               <a class="nav-link {% if view_name == 'login' %}active{% endif %}" href="{% url 'login' %}">Войти</a>
-            </li>
           {% endif %}
-        </ul>
+        </div>
         {% endwith %}
       </div>
       <a class="navbar-brand" href="{% url 'homepage:index' %}">

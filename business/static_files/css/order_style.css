@@ -1,0 +1,40 @@
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.order_list {
+    list-style: none;
+}
+
+/* Стили для шапки таблицы */
+.orders-table thead tr {
+    background-color: #343a40;
+    color: #ffffff;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Ячейки шапки */
+.orders-table th,
+.orders-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+/* Чередование строк */
+.orders-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Эффект при наведении */
+.orders-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
