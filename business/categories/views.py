@@ -10,9 +10,7 @@ REDIRECT_TO = 'categories:all_categories'
 
 
 class CategoryListView(LoginRequiredMixin, ListView):
-    """
-    Страница со всеми категориями
-    """
+    """Страница со всеми категориями"""
     model = Category
     template_name = 'categories/all_categories.html'
     paginate_by = 4

@@ -90,6 +90,7 @@
 
     // Отправка данных формы
     const orderForm = document.getElementById("order-form");
+
     orderForm.addEventListener("submit", function (event) {
         event.preventDefault(); // Предотвращаем стандартную отправку формы
 
@@ -113,13 +114,16 @@
             }
         });
         const buyer = document.getElementById("id_buyer").value;
+        const delivery = document.getElementById("id_delivery").value;
+        const created = document.getElementById("id_created").value;
+
         fetch(send_data, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRFToken': csrfToken
             },
-            body: JSON.stringify({ products, buyer })
+            body: JSON.stringify({ products, buyer, delivery, created })
         })
         .then(response => {
             if (response.ok) {

@@ -10,7 +10,7 @@
   {% if products %}
       {% for product in products %}
         <div class="product">
-          <p>{{ product.title }} - {{ product.description }}.</p>
+          <p>{{ product.title }} - {{ product.description }}. Цена {{ product.selling_price }}</p>
           <p>{% if product.amount > 0 %}
           Осталось {{ product.amount|floatformat:"g" }} {{ product.measure_unit }}
           {% else %} Товар закончился :( {% endif %}</p>

@@ -1,3 +1,5 @@
+import datetime
+
 from products.models import Product
 from decimal import Decimal
 from collections import defaultdict
@@ -37,3 +39,13 @@ def check_products(data, user_id, errors_log):
             errors_log.add('Кол-во товара превышает остаток')
             return False
     return True
+
+
+def check_date(date_str):
+    try:
+        date_value = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+        if date_value > datetime.date.today():
+            return False
+        return True
+    except Exception as e:
+        return False

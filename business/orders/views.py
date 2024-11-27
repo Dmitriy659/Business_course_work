@@ -1,3 +1,4 @@
+import datetime
 from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
@@ -11,7 +12,7 @@ from django.views.generic import ListView
 
 from .forms import OrderForm
 from .models import OrderItem, Order
-from .util import check_products
+from .util import check_products, check_date
 from products.models import Product
 
 import json
@@ -86,6 +87,11 @@ class CreateOrderView(LoginRequiredMixin, View):
         data = json.loads(request.body)
         form_data = request.POST.copy()
         form_data['buyer'] = data.get('buyer')
+        form_data['delivery'] = data.get('delivery')
+        form_data['created'] = datetime.date.today()
+        if check_date(data.get('created')):
+            form_data['created'] = data.get('created')
+
         form = OrderForm(form_data)
         if check_products(data, request.user.id, errors_log) and form.is_valid():
             order = form.save(commit=False)

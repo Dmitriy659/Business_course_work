@@ -13,6 +13,7 @@
             <tr>
                 <th>Номер заказа</th>
                 <th>Покупатель</th>
+                <th>Способ доставки</th>
                 <th>Дата создания</th>
                 <th>Детали заказа</th>
                 <th>Выручка</th>
@@ -24,7 +25,8 @@
         <tr>
             <td>{{ order.id }}</td>
             <td>{{ order.buyer }}</td>
-            <td>{{ order.created|date:"d.m.Y H:i" }}</td>
+            <td>{{ order.delivery }}</td>
+            <td>{{ order.created|date:"d.m.Y" }}</td>
             <td>
                 <ul>
                     {% for item in order.order.all %}

@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.db import models
@@ -10,7 +12,9 @@ User = get_user_model()
 class Order(models.Model):
     buyer = models.CharField(max_length=30, verbose_name='Покупатель', blank=False, null=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateField(default=datetime.date.today, verbose_name='Дата покупки', blank=False, null=False)
+    delivery = models.CharField(max_length=30, verbose_name='Способ доставки', blank=True,
+                                help_text="Укажите способ доставки")
 
     def __str__(self):
         return f'Заказ №{self.id}'
