@@ -12,7 +12,7 @@ User = get_user_model()
 class Order(models.Model):
     buyer = models.CharField(max_length=30, verbose_name='Покупатель', blank=False, null=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    created = models.DateField(default=datetime.date.today, verbose_name='Дата покупки', blank=False, null=False)
+    created = models.DateField(default=datetime.date.today, verbose_name='Дата покупки', blank=True, null=False)
     delivery = models.CharField(max_length=30, verbose_name='Способ доставки', blank=True,
                                 help_text="Укажите способ доставки")
 

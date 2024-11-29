@@ -1,12 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+import logging
 import time
 
 from selenium.webdriver.support.select import Select
 
+log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 driver = webdriver.Chrome()
 driver.get("http://localhost:8000")
 
+log.info("Start testing")
 login_button = driver.find_element(By.XPATH, '//*[@id="navbarNav"]/ul/a')
 login_button.click()
 time.sleep(1)
@@ -20,6 +26,7 @@ login_button = driver.find_element(By.XPATH, '/html/body/main/div/div/div[2]/for
 login_button.click()
 
 time.sleep(1)
+log.info("Successful authorization")
 
 category_button = driver.find_element(By.XPATH, '//*[@id="navbarNav"]/ul/li[2]/a')
 category_button.click()
@@ -35,6 +42,8 @@ category_name_input.send_keys("selenium")
 category_desc_input.send_keys("selenium desc")
 category_button = driver.find_element(By.XPATH, '/html/body/main/div/form/button')
 category_button.click()
+
+log.info(f"Successful creation of a category. Category name: {category_name_input}")
 time.sleep(1)
 category_update_button = driver.find_element(By.XPATH, '/html/body/main/div/div/div/a[1]')
 category_update_button.click()
@@ -44,6 +53,7 @@ category_desc_input.send_keys("123")
 save_category_button = driver.find_element(By.XPATH, '/html/body/main/div/form/button')
 save_category_button.click()
 time.sleep(1)
+log.info(f"Successful updating a category")
 
 view_products = driver.find_element(By.XPATH, '/html/body/main/div/div/div/a[3]')
 view_products.click()
@@ -68,10 +78,12 @@ time.sleep(2)
 create_product_button = driver.find_element(By.XPATH, '/html/body/main/div/form/button')
 create_product_button.click()
 time.sleep(1)
+log.info("Successfully created product")
 
 all_products_button = driver.find_element(By.XPATH, '//*[@id="navbarNav"]/ul/li[3]/a')
 all_products_button.click()
 time.sleep(1)
+log.info("Opened page 'products heap'")
 
 order_button = driver.find_element(By.XPATH, '//*[@id="navbarNav"]/ul/li[4]/a')
 order_button.click()
@@ -87,6 +99,7 @@ add_product_button.click()
 
 dropdown = driver.find_element(By.XPATH, '//*[@id="products-list"]/div/select')
 select = Select(dropdown)
+time.sleep(1)
 select.select_by_visible_text("selenium product")
 
 amount_input = driver.find_element(By.XPATH, '//*[@id="products-list"]/div/input[2]')
@@ -102,12 +115,14 @@ time.sleep(1)
 create_order_button = driver.find_element(By.XPATH, '//*[@id="order-form"]/button[2]')
 create_order_button.click()
 time.sleep(1)
+log.info("Successfully created order")
 
-delete_order = driver.find_element(By.XPATH, '/html/body/main/div/table/tbody/tr/td[6]/a')
+delete_order = driver.find_element(By.XPATH, '/html/body/main/div/table/tbody/tr/td[7]/a')
 delete_order.click()
 
 delete_order_confirm = driver.find_element(By.XPATH, '/html/body/main/div/form/input[2]')
 delete_order_confirm.click()
+log.info("Successfully deleted order")
 
 time.sleep(1)
 
@@ -122,9 +137,11 @@ time.sleep(1)
 delete_category_button_confirm = driver.find_element(By.XPATH, '/html/body/main/div/form/input[2]')
 delete_category_button_confirm.click()
 time.sleep(1)
+log.info("Successfully deleted category")
 
 profile_button = driver.find_element(By.XPATH, '//*[@id="navbarNav"]/div/a')
 profile_button.click()
+log.info("Open a profile page")
 time.sleep(1)
 driver.execute_script("window.scrollBy(0, 200);")
 time.sleep(1)
@@ -134,10 +151,12 @@ driver.execute_script("window.scrollBy(0, 200);")
 time.sleep(1)
 save_profile_button = driver.find_element(By.XPATH, '/html/body/main/div/form/button')
 save_profile_button.click()
+log.info("Successfully saved user data")
 
 logout_button = driver.find_element(By.XPATH, '//*[@id="navbarNav"]/div/form/button')
 logout_button.click()
 time.sleep(1)
+log.info("Logout")
 
 driver.close()
-
+log.info("Testing has been completed successfully")

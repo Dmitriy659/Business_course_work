@@ -33,7 +33,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     company_name = models.CharField(max_length=30, blank=True, null=True,
-                                    help_text="Необязательное поле")
+                                    help_text="Необязательное поле", verbose_name="Название компании")
     business_type = models.CharField(max_length=30, blank=False, null=False,
                                      choices=[('Производство', 'Производство'),
                                               ('Торговля', 'Торговля'),
@@ -42,9 +42,9 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
                                               ('Здравоохранение', 'Здравоохранение'),
                                               ('Медиа', 'Медиа'),
                                               ('Другое', 'Другое')],
-                                     default='Другое')
+                                     default='Другое', verbose_name="Тип бизнеса")
     role_in_company = models.CharField(max_length=30, blank=True, null=True,
-                                       help_text="Необязательное поле")
+                                       help_text="Необязательное поле", verbose_name="Должность")
     registration_date = models.DateField(auto_now_add=True)
     total_revenue = models.PositiveIntegerField(verbose_name='Выручка', default=0)
     total_expenses = models.IntegerField(verbose_name='Затраты', default=0)

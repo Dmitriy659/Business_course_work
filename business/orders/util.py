@@ -20,7 +20,7 @@ def check_products(data, user_id, errors_log):
             if product['product_id'] in products_dict:
                 try:
                     round(float(product['price']))
-                except Exception as e:
+                except Exception:
                     errors_log.add('Проверьте корректность цены')
                     return False
                 quantity = Decimal(float(product['quantity']))
@@ -31,7 +31,7 @@ def check_products(data, user_id, errors_log):
             else:
                 errors_log.addd('Одного из товаров у вас нет')
                 return False
-        except Exception as e:
+        except Exception:
             return False
 
     for product in products_to_new_check:
@@ -47,5 +47,5 @@ def check_date(date_str):
         if date_value > datetime.date.today():
             return False
         return True
-    except Exception as e:
+    except Exception:
         return False
