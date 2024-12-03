@@ -16,6 +16,10 @@ class Order(models.Model):
     delivery = models.CharField(max_length=30, verbose_name='Способ доставки', blank=True,
                                 help_text="Укажите способ доставки")
 
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+
     def __str__(self):
         return f'Заказ №{self.id}'
 
@@ -27,3 +31,10 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)], default=0.01,
                                 verbose_name='Цена')
     quantity = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.01)])
+
+    class Meta:
+        verbose_name = 'Позиция в заказе'
+        verbose_name_plural = 'Позиции в заказах'
+
+    def __str__(self):
+        return f'Позициця в заказе {self.order.id}'
